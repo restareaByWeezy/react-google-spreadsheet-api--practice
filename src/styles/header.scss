@@ -1,0 +1,29 @@
+.header {
+  position: absolute;
+  width: 254px;
+  height: 86px;
+  left: 40px;
+  top: 40px;
+
+  font-family: Roboto;
+  font-style: normal;
+
+  .header-client {
+    width: 186px;
+    height: 19px;
+
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 19px;
+  }
+
+  .header-date {
+    position: absolute;
+    width: 186px;
+    height: 13px;
+
+    font-weight: normal;
+    font-size: 10px;
+    line-height: 133.9%;
+  }
+}

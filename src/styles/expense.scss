@@ -1,0 +1,29 @@
+.expense {
+  position: relative;
+  width: 532px;
+  height: 18px;
+  left: 40px;
+  top: 205px;
+
+  .expense-category {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 10px;
+    line-height: 12px;
+  }
+
+  .expense-items {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    font-family: Space Mono;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 10px;
+    line-height: 15px;
+  }
+}
