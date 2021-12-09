@@ -1,7 +1,7 @@
 import React from 'react';
 import '../styles/total.scss'
 
-const Total = () => {
+const Total = (props) => {
 
     return (
         <div className="total">
@@ -9,7 +9,7 @@ const Total = () => {
                 Total Due
             </div>
             <div className="total-price">
-                $12,345
+                {'$' + props.price}
             </div>
             <div className="total-due">
                 Total payment due in 30 days

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./styles/global.scss";
 import Expense from "./components/Expense";
 import Header from "./components/Header";
@@ -8,55 +8,61 @@ import { GoogleSpreadsheet } from "google-spreadsheet";
 const creds = require("./googleconfig.json");
 
 const App = () => {
-  // const [rowData, setRowData] = useState([]);
-  // const [totalPriceData, setTotalPriceData] = useState("");
-  // const [clientNameData, setClientNameData] = useState("");
+  const [data, setData] = useState(null);
+  const [rowData, setRowData] = useState([]);
+  const [price, setPrice] = useState(0);
 
-  const doc = new GoogleSpreadsheet(
-    "1LxPjchDbLKcdvF4Om6_iJIQ0014QKwZzFMPqCTY-1lU"
-  );
+  const calcSum = (arr) => {
+    let sumPrice = 0;
 
-  async function authGoogleSheet() {
-    try {
-      await doc.useServiceAccountAuth(creds);
+    arr.forEach(row => {
+      sumPrice += Number(row.price);
+    });
 
-      console.log(doc.title);
-    } catch (err) {
-      console.log("Auth Error", err);
+    return sumPrice;
+  };
+
+
+  useEffect(() => {
+    const doc = new GoogleSpreadsheet(
+      "1LxPjchDbLKcdvF4Om6_iJIQ0014QKwZzFMPqCTY-1lU"
+    );
+
+    async function authGoogleSheet() {
+      try {
+        await doc.useServiceAccountAuth(creds);
+        await doc.loadInfo();
+
+        setData(doc);
+      } catch (err) {
+        console.log("Auth Error", err);
+      }
     }
-  }
+    authGoogleSheet();
+  }, []);
 
-  authGoogleSheet();
+  useEffect(() => {
+    if (data) {
+      async function readingData() {
+        const sheet = data.sheetsByIndex[0];
 
-  async function readingData() {
-    await doc.loadInfo();
-    const sheet = doc.sheetsByIndex[0];
+        const rows = await sheet.getRows();
 
-    const rows = await sheet.getRows();
-    await sheet.loadCells();
+        setRowData(rows);
+        setPrice(calcSum(rows));
 
-    const totalPrice = sheet.getCellByA1("D2");
-    const clientName = sheet.getCellByA1("E2");
 
-    console.log(totalPrice.value);
-    console.log(clientName.value);
+      }
+      readingData();
+    }
+  }, [data]);
 
-    // setRowData(rows);
-    // setTotalPriceData(totalPrice.value);
-    // setClientNameData(clientName.value);
-
-    console.log(rows.length);
-    console.log(rows[0].description);
-    console.log(rows[0].subtotal);
-  }
-
-  readingData();
 
   return (
     <div className='app'>
       <Header></Header>
-      <Expense ></Expense>
-      <Total></Total>
+      <Expense rowData={rowData}></Expense>
+      <Total price={price}></Total>
     </div>
   );
 };

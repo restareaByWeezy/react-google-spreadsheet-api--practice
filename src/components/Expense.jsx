@@ -1,7 +1,13 @@
 import React from "react";
 import "../styles/expense.scss";
 
-const Expense = () => {
+const Expense = props => {
+  const result = props.rowData.map((row, index) => (
+    <div key={index} className='expense-items'>
+      <div>{row.description}</div>
+      <div>{row.price}</div>
+    </div>
+  ));
 
   return (
     <div className='expense'>
@@ -9,23 +15,10 @@ const Expense = () => {
         <div>Description</div>
         <div>Subtotal</div>
       </div>
-      <hr style={{height: '1px', background: "#000000" }}/>
-      <div className="expense-wrapper">
-        <div className='expense-items'>
-          <div>one</div>
-          <div>100</div>
-        </div>
-      </div>
+      <hr style={{ height: "1px", background: "#000000" }} />
+      <div className='expense-wrapper'>{result}</div>
     </div>
   );
 };
 
 export default Expense;
-
-// const rows = rows
-// const result = rows.map((row, index)=>
-// <div key={index} className='expense-items'>
-// <div>{rows[index].description}</div>
-// <div>{rows[index].subtotal}</div>
-// </div>
-// )
