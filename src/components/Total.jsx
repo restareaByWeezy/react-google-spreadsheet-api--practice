@@ -2,6 +2,7 @@ import React from 'react';
 import '../styles/total.scss'
 
 const Total = () => {
+
     return (
         <div className="total">
             <div className="total-title">

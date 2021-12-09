@@ -1,7 +1,7 @@
 import React from 'react';
 import '../styles/header.scss'
 
-const Header = () => {
+const Header = (props) => {
     const dt = new Date();
     const dtToString = dt.toDateString();
 
