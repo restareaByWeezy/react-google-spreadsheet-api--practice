@@ -1,9 +1,7 @@
 .expense {
-  position: relative;
+  display: flex;
+  flex-direction: column;
   width: 532px;
-  height: 18px;
-  left: 40px;
-  top: 205px;
 
   .expense-category {
     display: flex;
@@ -25,5 +23,23 @@
     font-weight: normal;
     font-size: 10px;
     line-height: 15px;
+    text-align: center;
+    border: 20px;
+    border-color: aqua;
+
+    .ingridients {
+      width: 33%;
+      text-align: left;
+    }
+
+    .amount {
+      width: 33%;
+      text-align: center;
+    }
+
+    .cost {
+      width: 33%;
+      text-align: right;
+    }
   }
 }

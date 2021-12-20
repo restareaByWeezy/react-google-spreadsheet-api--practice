@@ -4,16 +4,18 @@ import "../styles/expense.scss";
 const Expense = props => {
   const result = props.rowData.map((row, index) => (
     <div key={index} className='expense-items'>
-      <div>{row.description}</div>
-      <div>{row.price}</div>
+      <div className='ingridients'>{row.ingridients}</div>
+      <div className='amount'>{row.amount}</div>
+      <div className='cost'>{row.cost}</div>
     </div>
   ));
 
   return (
     <div className='expense'>
       <div className='expense-category'>
-        <div>Description</div>
-        <div>Subtotal</div>
+        <div>Ingridients</div>
+        <div>Amount</div>
+        <div>Cost</div>
       </div>
       <hr style={{ height: "1px", background: "#000000" }} />
       <div className='expense-wrapper'>{result}</div>
