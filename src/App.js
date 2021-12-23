@@ -14,18 +14,7 @@ const App = () => {
   const [rowData, setRowData] = useState([]);
   const [cost, setTotalCost] = useState(0);
   const [costPerOne, setCostPerOne] = useState(0);
-
-  //function
-
-  const calcSum = arr => {
-    let sumPrice = 0;
-
-    arr.forEach(row => {
-      sumPrice += Number(row.price);
-    });
-
-    return sumPrice;
-  };
+  const [productPicture, setProductPicture] = useState(null);
 
   useEffect(() => {
     const doc = new GoogleSpreadsheet(
@@ -56,10 +45,12 @@ const App = () => {
 
         const cellTotalCost = await sheet.getCellByA1("D2");
         const cellCostPerOne = await sheet.getCellByA1("E2");
+        const cellProductPicture = await sheet.getCellByA1("F2");
 
         setRowData(rows);
         setTotalCost(cellTotalCost.value);
-        setCostPerOne(cellCostPerOne.valuec);
+        setCostPerOne(cellCostPerOne.value);
+        setProductPicture(cellProductPicture.value);
       }
       readingData();
     }
@@ -69,7 +60,7 @@ const App = () => {
     <div id='app'>
       {rowData.length ? (
         <>
-          <Header></Header>
+          <Header productPicture={productPicture}></Header>
           <Expense rowData={rowData}></Expense>
           <Total cost={cost} costPerOne={costPerOne}></Total>
         </>

@@ -4,7 +4,7 @@ import "../styles/expense.scss";
 const Expense = props => {
   const result = props.rowData.map((row, index) => (
     <div key={index} className='expense-items'>
-      <div className='ingridients'>{row.ingridients}</div>
+      <div className={'ingridients'+ (row.amount ? '' : "-parts" )}>{row.ingridients}</div>
       <div className='amount'>{row.amount}</div>
       <div className='cost'>{row.cost}</div>
     </div>
