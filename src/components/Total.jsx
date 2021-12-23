@@ -16,7 +16,7 @@ const Total = props => {
       <div className='total-costPerOne-title'>Cost per one piece</div>
       <div className='total-costPerOne'>{"$" + props.costPerOne}</div>
       <div className='total-due'>
-      Cost can fluctuate with market price
+        Cost can fluctuate with market price
         <hr style={{ height: "2px", background: "#000000" }} />
       </div>
 
