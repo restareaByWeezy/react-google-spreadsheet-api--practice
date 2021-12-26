@@ -11,15 +11,14 @@ const creds = require("./googleconfig.json");
 const App = () => {
   //state 설정
   const [data, setData] = useState(null);
-  const [rowData, setRowData] = useState([]);
-  const [cost, setTotalCost] = useState(0);
-  const [costPerOne, setCostPerOne] = useState(0);
-  const [productPicture, setProductPicture] = useState(null);
+  const [rowDataArray, setRowDataArray] = useState([]);
 
   useEffect(() => {
     const doc = new GoogleSpreadsheet(
       "1LxPjchDbLKcdvF4Om6_iJIQ0014QKwZzFMPqCTY-1lU"
     );
+
+
 
     async function authGoogleSheet() {
       try {
@@ -37,20 +36,14 @@ const App = () => {
   useEffect(() => {
     if (data) {
       async function readingData() {
-        const sheet = data.sheetsByIndex[1];
-
-        const rows = await sheet.getRows();
-
-        await sheet.loadCells();
-
-        const cellTotalCost = await sheet.getCellByA1("D2");
-        const cellCostPerOne = await sheet.getCellByA1("E2");
-        const cellProductPicture = await sheet.getCellByA1("F2");
-
-        setRowData(rows);
-        setTotalCost(cellTotalCost.value);
-        setCostPerOne(cellCostPerOne.value);
-        setProductPicture(cellProductPicture.value);
+        const sheet = data.sheetsByIndex;
+        let rows = [];
+        for (let index = 0; index < sheet.length; index++) {
+          let rowsLoop = await sheet[index].getRows();
+          rows.push(rowsLoop);
+          console.log(rowsLoop);
+        }
+        setRowDataArray(rows);
       }
       readingData();
     }
@@ -58,11 +51,23 @@ const App = () => {
 
   return (
     <div id='app'>
-      {rowData.length ? (
+      {rowDataArray.length ? (
         <>
-          <Header productPicture={productPicture}></Header>
-          <Expense rowData={rowData}></Expense>
-          <Total cost={cost} costPerOne={costPerOne}></Total>
+          {rowDataArray.map((rowData, index) => (
+            // <Header productPicture={productPicture}></Header>
+            <>
+              <Header
+                title={rowData[0].title}
+                imageUrl={`img/IMG_${index}.jpg`}
+              ></Header>
+              <Expense rowData={rowData}></Expense>
+              <Total
+                docTitle={data.title}
+                totalCost={rowData[0]["total cost"]}
+                costPerOne={rowData[0]["cost/one piece"]}
+              ></Total>
+            </>
+          ))}
         </>
       ) : (
         <Loading></Loading>

@@ -4,10 +4,10 @@ import "../styles/header.scss";
 const Header = props => {
   return (
     <div className='header'>
-      <h1>Tarte Chiboust Passion</h1>
+      <h1>{props.title}</h1>
       <img
         className='header-productPicture'
-        src={props.productPicture}
+        src={props.imageUrl}
         alt='image'
       />
       <div className='header-info-wrapper'>
@@ -18,3 +18,4 @@ const Header = props => {
 };
 
 export default Header;
+

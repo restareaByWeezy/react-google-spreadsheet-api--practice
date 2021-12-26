@@ -26,6 +26,9 @@
     line-height: 15px;
     text-align: center;
 
+    //페이지 잘림 방지
+    break-inside: avoid;
+
     .ingridients {
       width: 33%;
       text-align: left;
